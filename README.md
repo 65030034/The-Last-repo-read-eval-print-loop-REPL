@@ -1,70 +1,64 @@
-# The-Last-repo-read-eval-print-loop-REPL
-## ขั้นตอนการทดลอง
-1.กด show example หา uart_repl สร้างโปรเจคใหม่
+| Supported Targets | ESP32 | ESP32-C2 | ESP32-C3 | ESP32-C5 | ESP32-C6 | ESP32-H2 | ESP32-P4 | ESP32-S2 | ESP32-S3 |
+| ----------------- | ----- | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- |
 
+# UART REPL Example
 
+(See the README.md file in the upper level 'examples' directory for more information about examples.)
 
+This example demonstrates how to use REPL console on a different UART than the default one.
+It also shows how to connect these two UART together, either for testing or for sending commands
+without any human interaction.
 
+## How to use example
 
+### Hardware Required
 
-## Reference
-### ตำแหน่งขาของ ESP32
+The example can be run on any ESP board that have at least 2 UARTs. The development board shall be connected to a
+PC with a single USB cable for flashing and monitoring. If you are willing to monitor the console UART, you may use
+a 3.3V compatible USB-to-Serial dongle on its GPIO pin.
 
-![image](https://github.com/user-attachments/assets/7c29cbd2-c7ec-4a8d-9129-355cf9fa44bc)
+### Setup the Hardware
 
-### การเชื่อมต่อ ESP32 กับ USB
+No external connection is needed in order to run the example. However, as stated before, if you are willing to see what
+is going on on the second UART (console UART), you can connect pins CONSOLE_UART_TX_PIN (5 by default) and
+CONSOLE_UART_RX_PIN (4 by default) to a Serial-to-USB adapter.
 
-![image](https://github.com/user-attachments/assets/7f11041f-d8dc-493f-b609-fb6c0fa71b7a)
+### Configure the project
 
+The default values, located at the top of `main/uart_repl_example_main.c` can be changed such as:
+DEFAULT_UART_CHANNEL, CONSOLE_UART_CHANNEL, DEFAULT_UART_RX_PIN, DEFAULT_UART_TX_PIN, CONSOLE_UART_RX_PIN,
+CONSOLE_UART_TX_PIN, UARTS_BAUD_RATE, TASK_STACK_SIZE, and READ_BUF_SIZE.
 
+### Build and Flash
 
-2.เปลี่ยนขา 
-## ![image](https://github.com/user-attachments/assets/f693048a-39d2-41e3-a4de-59392f29ebcb)
+Build the project and flash it to the board, then run monitor tool to view default UART's serial output:
 
-3.ทำการbuildแล้วก็flashลงบอร์ด
-## ![image](https://github.com/user-attachments/assets/8a679d30-29cf-46bb-bebb-e1f3d0a950f9)
-พิมพ์คำว่า help
-## ![image](https://github.com/user-attachments/assets/41328c63-e07f-49ce-93c1-a827319486e4)
-พิมพ์คำสั่ง consolehelp
-## ![image](https://github.com/user-attachments/assets/1eda2c87-18dd-40c6-96de-affc124695ba)
-พิมพ์คำสั่ง help consoletest
-## ![image](https://github.com/user-attachments/assets/9faad475-0aef-47f7-8ad7-284534a6cfe6)
-4.คัดลอก และ เพิ่มเนื้อหาตามนี้
-## ![image](https://github.com/user-attachments/assets/da113bd8-2dd7-42d0-ac0f-b1a66cf52097)
-และ เพิ่ม ESP_ERROR_CHECK(esp_console_cmd_register(&led));
-### ![image](https://github.com/user-attachments/assets/c8a7e39f-4fcd-4f81-8706-4aed08efb83f)
-และ คัดลอก ฟังก์ชั่นด้านบนมาแก้ไข ดังนี้
-## ![image](https://github.com/user-attachments/assets/78b22f8a-5b6a-4336-a667-4405f293d3a4)
-build และ flash และทดสอบพิมพ์ led 1 on
-## ![image](https://github.com/user-attachments/assets/43c0a605-7925-4bdd-aeeb-9f6c015a05b5)
-เพิ่มเนื้อหาดังนี้
-## ![image](https://github.com/user-attachments/assets/87e33054-6849-4091-83b4-4de78e2067be)
-build และ flash และทดสอบพิมพ์ led 1 on
-## ![image](https://github.com/user-attachments/assets/7305f0a4-1861-48ce-a9a5-45c41e5fcb4b)
-เพิ่มคำสั่งดังนี้
-## ![image](https://github.com/user-attachments/assets/077e6979-2fa8-4f08-be54-3ce96d31ebb0)
-build และ flash และทดสอบพิมพ์ led 1 on และ led y off แล้วสังเกตุผลลัพธ์
-## ![image](https://github.com/user-attachments/assets/30fd51a1-e450-4421-b8d9-c282547d17ab)
-เพิ่มคำสั่งดังนี้
-## ![image](https://github.com/user-attachments/assets/17973c82-5537-4d23-986c-802ec6f5feec)
-build และ flash และทดสอบพิมพ์ led 1 on และ led 1 off
-## ![image](https://github.com/user-attachments/assets/f3de87ce-1a0d-4d7d-ad21-8168434a09e4)
-5.เพิ่ม gpio_set_direction(GPIO_NUM_16, GPIO_MODE_OUTPUT);
-## ![image](https://github.com/user-attachments/assets/1630ee0c-205e-4670-b46e-1783d1e08f28)
-และเพิ่ม gpio_set_level(led_no,led_status);  ตามภาพ
-## ![image](https://github.com/user-attachments/assets/3355cc92-53b0-42d2-af8c-129c9440437b)
-ทดสอบ พิมพ์คำสั่ง led 16 on ผลลัพธ์ledจะติด
-## ![image](https://github.com/user-attachments/assets/fc5cbe67-46a6-4026-853e-d4517b4b1828)
-6.เพิ่มส่วนของenable
-## ![image](https://github.com/user-attachments/assets/c980d5ad-372c-49aa-98d3-ba91c804fcdd)
-*** ต้องลบ gpio_set_direction(GPIO_NUM_16, GPIO_MODE_OUTPUT); ออก
-## ![image](https://github.com/user-attachments/assets/9e0e87fa-1945-49de-88ad-48f2ed9c2232)
-build และ flash และทดสอบพิมพ์ led 17 enable และ led 17 on
-## ![image](https://github.com/user-attachments/assets/2a9c9b8e-1ed7-4b48-9dc0-c0f942d79570)
+```
+idf.py -p PORT flash monitor
+```
 
+(To exit the serial monitor, type ``Ctrl-]``.)
 
+See the Getting Started Guide for full steps to configure and use ESP-IDF to build projects.
 
+## Example Output
 
+The example will set up the default UART to use DEFAULT_UART_RX_PIN and DEFAULT_UART_TX_PIN. Then, it will set up
+the REPL console on the second UART. Finally, it will connect both UARTs together in order to let default UART
+be able to send commands and receive replies to and from the console UART.
 
+Here is a diagram of what UARTs will look like:
 
+```
+                  UART default      UART console
 
+USB monitoring <------ TX -----------> RX----+
+                                             v
+                                       Parse command
+                                     and output result
+                                             |                 Optional 3.3V
+                       RX <----------- TX<---+  (----------->) Serial-to-USB
+                                                                  Adapter
+```
+
+If everything goes fine, the output on default UART should be "Result: Success". Else, it should be "Result: Failure".
